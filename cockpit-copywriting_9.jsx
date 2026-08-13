@@ -2591,8 +2591,9 @@ function RepField({ f, notes, lists, setNote, setList, onConfirm }) {
   if (!f.repeat) return (
     <label className="field">
       <span className="field-lbl">{f.label}</span>
-      <textarea value={val} placeholder={f.ph} rows={3}
+      <textarea value={val} rows={3}
         onChange={(e) => setNote(f.k, e.target.value)} />
+      {f.ph && <span className="field-hint">{f.ph}</span>}
     </label>
   );
   return (
@@ -2601,10 +2602,11 @@ function RepField({ f, notes, lists, setNote, setList, onConfirm }) {
         {f.label}
         {min > 0 && <em className={"min" + (done >= min ? " ok" : "")}>{done}/{min} minimum</em>}
       </span>
+      {f.ph && <span className="field-hint">{f.ph}</span>}
       {items.map((v, i) => (
         <div className="rep-row" key={i}>
           <span className="rep-idx">{i + 1}</span>
-          <textarea value={v} placeholder={f.ph} rows={2}
+          <textarea value={v} rows={2}
             onChange={(e) => { const l = [...items]; l[i] = e.target.value; setList(f.k, l); }} />
           <button className="rep-del" onClick={async () => { if (!(await onConfirm("Supprimer cet élément ?"))) return; const l = [...items]; l.splice(i, 1); setList(f.k, l.length ? l : [""]); }}>×</button>
         </div>
@@ -4118,6 +4120,7 @@ const CSS = `
 .fields{display:flex;flex-direction:column;gap:12px;}
 .field{display:flex;flex-direction:column;gap:4px;}
 .field-lbl{font-size:12px;font-weight:600;color:#3C453E;display:flex;align-items:center;gap:7px;}
+.field-hint{font-size:11px;color:#8a9a8d;line-height:1.5;font-style:italic;}
 .min{font-style:normal;font-family:'JetBrains Mono',monospace;font-size:10px;color:#A0A9A2;}
 .min.ok{color:var(--done);}
 .field textarea{width:100%;resize:vertical;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font-family:inherit;font-size:13px;line-height:1.55;color:var(--ink);background:#FBFCFA;}
