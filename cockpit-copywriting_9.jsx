@@ -3620,6 +3620,7 @@ function AuthScreen() {
 
   return (
     <div className="authWrap">
+      <style>{CSS}</style>
       <div className="authPanel">
         <div className="authPanel-mark">◧</div>
         <div className="authPanel-t">Cockpit Copywriting</div>
