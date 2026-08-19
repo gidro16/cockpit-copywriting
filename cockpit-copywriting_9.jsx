@@ -3620,23 +3620,33 @@ function AuthScreen() {
 
   return (
     <div className="authWrap">
+      <div className="authPanel">
+        <div className="authPanel-mark">◧</div>
+        <div className="authPanel-t">Cockpit Copywriting</div>
+        <div className="authPanel-s">Pipeline de lancement</div>
+        <p className="authPanel-quote">
+          Les 29 chapitres de la formation, réordonnés dans la logique d'un vrai lancement — de la recherche terrain au brief final.
+        </p>
+      </div>
+
       <form className="authCard" onSubmit={submit}>
-        <div className="brand-t" style={{ marginBottom: 4 }}>Cockpit Copywriting</div>
-        <div className="brand-s" style={{ marginBottom: 20 }}>
-          {mode === "login" ? "Connecte-toi à ton cockpit" : "Crée ton cockpit"}
-        </div>
+        <div className="authCard-eyebrow">{mode === "login" ? "Content de te revoir" : "Bienvenue"}</div>
+        <h1 className="authCard-h">{mode === "login" ? "Connecte-toi à ton cockpit" : "Crée ton cockpit"}</h1>
+
         <label className="field">
           <span className="field-lbl">Email</span>
-          <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input type="email" required autoFocus value={email} onChange={(e) => setEmail(e.target.value)} placeholder="toi@exemple.com" />
         </label>
         <label className="field">
           <span className="field-lbl">Mot de passe</span>
-          <input type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="6 caractères minimum" />
         </label>
+
         {error && <div className="authError">{error}</div>}
         {info && <div className="authInfo">{info}</div>}
-        <button className="primary" type="submit" disabled={busy}>
-          {busy ? "…" : mode === "login" ? "Se connecter" : "Créer mon compte"}
+
+        <button className="authSubmit" type="submit" disabled={busy}>
+          {busy ? "…" : mode === "login" ? "Se connecter →" : "Créer mon compte →"}
         </button>
         <button type="button" className="authSwitch" onClick={() => { setMode(mode === "login" ? "signup" : "login"); setError(""); setInfo(""); }}>
           {mode === "login" ? "Pas encore de compte ? Crée-le" : "Déjà un compte ? Connecte-toi"}
@@ -4316,14 +4326,30 @@ const CSS = `
 .modal-actions .primary{background:var(--rail);color:#fff;border-color:var(--rail);}
 
 /* AUTH */
-.authWrap{display:flex;align-items:center;justify-content:center;min-height:100vh;width:100%;background:var(--paper,#EEF0EC);font-family:'Inter',system-ui,sans-serif;}
-.authCard{background:#fff;border:1px solid #DCE0DA;border-radius:14px;padding:32px;width:min(380px,90vw);display:flex;flex-direction:column;gap:14px;}
-.authCard input{width:100%;border:1px solid #DCE0DA;border-radius:7px;padding:9px 11px;font-family:inherit;font-size:13.5px;}
-.authCard input:focus{outline:none;border-color:#2E7D6B;}
-.authCard .primary{background:#14211C;color:#fff;border:none;border-radius:8px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:4px;}
-.authError{font-size:12.5px;color:#B0432E;background:#FBEAE6;border-radius:7px;padding:9px 11px;}
-.authInfo{font-size:12.5px;color:#1E8A5C;background:#E4F4EC;border-radius:7px;padding:9px 11px;}
-.authSwitch{background:none;border:none;color:#5B655E;font-size:12.5px;text-decoration:underline;cursor:pointer;font-family:inherit;padding:0;}
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap');
+.authWrap{display:flex;min-height:100vh;width:100%;background:#EEF0EC;font-family:'Inter',system-ui,sans-serif;}
+.authPanel{flex:1;min-width:0;background:#14211C;color:#EDEFEA;padding:60px 56px;display:flex;flex-direction:column;justify-content:center;gap:6px;}
+.authPanel-mark{font-size:34px;color:#7FD3B4;margin-bottom:6px;}
+.authPanel-t{font-family:'Fraunces',serif;font-weight:600;font-size:30px;line-height:1.15;color:#fff;}
+.authPanel-s{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#7E938A;margin-bottom:22px;}
+.authPanel-quote{max-width:380px;font-size:14.5px;line-height:1.65;color:#B7C2BB;}
+.authCard{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;padding:56px;max-width:440px;gap:14px;}
+.authCard-eyebrow{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#2E7D6B;font-weight:700;}
+.authCard-h{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:#141915;margin:0 0 10px;}
+.authCard .field{gap:5px;}
+.authCard input{width:100%;border:1px solid #DCE0DA;border-radius:8px;padding:10px 12px;font-family:inherit;font-size:13.5px;background:#FBFCFA;transition:border-color .15s;}
+.authCard input:focus{outline:none;border-color:#2E7D6B;background:#fff;}
+.authSubmit{background:#14211C;color:#fff;border:none;border-radius:9px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:6px;transition:background .15s;}
+.authSubmit:hover{background:#1E2E28;}
+.authSubmit:disabled{opacity:.6;cursor:default;}
+.authError{font-size:12.5px;color:#B0432E;background:#FBEAE6;border-radius:8px;padding:10px 12px;line-height:1.5;}
+.authInfo{font-size:12.5px;color:#1E8A5C;background:#E4F4EC;border-radius:8px;padding:10px 12px;line-height:1.5;}
+.authSwitch{background:none;border:none;color:#5B655E;font-size:12.5px;text-decoration:underline;cursor:pointer;font-family:inherit;padding:0;text-align:left;margin-top:2px;}
+@media (max-width:760px){
+  .authWrap{flex-direction:column;}
+  .authPanel{padding:36px 28px;flex:none;}
+  .authCard{padding:36px 28px;max-width:none;}
+}
 
 /* ACCOUNT (rail) */
 .rail-account{display:flex;flex-direction:column;gap:6px;padding-top:12px;margin-top:8px;border-top:1px solid rgba(255,255,255,.1);}
