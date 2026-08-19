@@ -2432,7 +2432,12 @@ const sget = async (k) => {
 };
 const sset = async (k, v) => {
   try {
-    await _sb.from("kv_store").upsert({ key: k, value: v, updated_at: new Date().toISOString() });
+    const { data: { user } } = await _sb.auth.getUser();
+    if (!user) return;
+    await _sb.from("kv_store").upsert(
+      { key: k, value: v, user_id: user.id, updated_at: new Date().toISOString() },
+      { onConflict: "user_id,key" }
+    );
   } catch {}
 };
 const sdel = async (k) => {
@@ -2444,6 +2449,7 @@ const LIST_KEY = "cw4_projects";
 const SEL_KEY  = "cw4_selected";
 const projKey  = (id) => `cw4_proj_${id}`;
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+const ADMIN_EMAIL = "christian.legrand.1609@gmail.com";
 
 const ALL_STEPS   = PIPELINE.flatMap((p) => p.steps);
 const CHAP_STEPS  = ALL_STEPS.filter((s) => s.type === "chap");
@@ -3577,8 +3583,138 @@ function ContentModal({ onClose, data, projectName }) {
   );
 }
 
+// ─── AuthScreen ───────────────────────────────────────────────────────────
+function AuthScreen() {
+  const [mode, setMode]         = useState("login"); // "login" | "signup"
+  const [email, setEmail]       = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError]       = useState("");
+  const [info, setInfo]         = useState("");
+  const [busy, setBusy]         = useState(false);
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setError(""); setInfo(""); setBusy(true);
+    try {
+      if (mode === "login") {
+        const { error: err } = await _sb.auth.signInWithPassword({ email, password });
+        if (err) throw err;
+      } else {
+        const { error: err } = await _sb.auth.signUp({ email, password });
+        if (err) throw err;
+        setInfo("Compte créé. Vérifie ta boîte mail pour confirmer, puis connecte-toi.");
+      }
+    } catch (err) {
+      const msg = (err?.message || "").toLowerCase();
+      if (msg.includes("not authorized") || msg.includes("not allowed") || msg.includes("denied")) {
+        setError("Cet email n'est pas autorisé à créer un compte. Contacte l'administrateur.");
+      } else if (msg.includes("invalid login")) {
+        setError("Email ou mot de passe incorrect.");
+      } else {
+        setError(err?.message || "Une erreur est survenue.");
+      }
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="authWrap">
+      <form className="authCard" onSubmit={submit}>
+        <div className="brand-t" style={{ marginBottom: 4 }}>Cockpit Copywriting</div>
+        <div className="brand-s" style={{ marginBottom: 20 }}>
+          {mode === "login" ? "Connecte-toi à ton cockpit" : "Crée ton cockpit"}
+        </div>
+        <label className="field">
+          <span className="field-lbl">Email</span>
+          <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+        </label>
+        <label className="field">
+          <span className="field-lbl">Mot de passe</span>
+          <input type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} />
+        </label>
+        {error && <div className="authError">{error}</div>}
+        {info && <div className="authInfo">{info}</div>}
+        <button className="primary" type="submit" disabled={busy}>
+          {busy ? "…" : mode === "login" ? "Se connecter" : "Créer mon compte"}
+        </button>
+        <button type="button" className="authSwitch" onClick={() => { setMode(mode === "login" ? "signup" : "login"); setError(""); setInfo(""); }}>
+          {mode === "login" ? "Pas encore de compte ? Crée-le" : "Déjà un compte ? Connecte-toi"}
+        </button>
+      </form>
+    </div>
+  );
+}
+
+// ─── SettingsModal (admin) ────────────────────────────────────────────────
+function SettingsModal({ onClose }) {
+  const [emails, setEmails] = useState([]);
+  const [newEmail, setNewEmail] = useState("");
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  const load = async () => {
+    const { data, error: err } = await _sb.from("allowed_emails").select("email").order("created_at");
+    if (!err && data) setEmails(data.map((r) => r.email));
+  };
+  useEffect(() => { load(); }, []);
+
+  const addEmail = async (e) => {
+    e.preventDefault();
+    setError(""); setBusy(true);
+    const em = newEmail.trim().toLowerCase();
+    if (!em) { setBusy(false); return; }
+    const { error: err } = await _sb.from("allowed_emails").insert({ email: em });
+    setBusy(false);
+    if (err) { setError("Impossible d'ajouter cet email (déjà présent ?)."); return; }
+    setNewEmail(""); load();
+  };
+  const removeEmail = async (em) => {
+    await _sb.from("allowed_emails").delete().eq("email", em);
+    load();
+  };
+
+  return (
+    <div className="modal-bg" onClick={onClose}>
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-head">
+          <div>
+            <h2>Paramètres — Accès au cockpit</h2>
+            <p>Seuls les emails listés ci-dessous peuvent créer un compte et avoir leur propre cockpit, complètement séparé du tien.</p>
+          </div>
+          <button className="modal-x" onClick={onClose}>×</button>
+        </div>
+        <div style={{ padding: "16px 22px", overflowY: "auto" }}>
+          <form onSubmit={addEmail} style={{ display: "flex", gap: 8, marginBottom: 14 }}>
+            <input type="email" placeholder="email@exemple.com" value={newEmail}
+              onChange={(e) => setNewEmail(e.target.value)} style={{ flex: 1 }} />
+            <button className="primary" type="submit" disabled={busy}>Autoriser</button>
+          </form>
+          {error && <div className="authError" style={{ marginBottom: 12 }}>{error}</div>}
+          <div className="allow-list">
+            {emails.map((em) => (
+              <div className="allow-row" key={em}>
+                <span>{em}</span>
+                {em !== ADMIN_EMAIL && (
+                  <button className="rep-del" onClick={() => removeEmail(em)}>×</button>
+                )}
+              </div>
+            ))}
+            {!emails.length && <div className="field-hint">Aucun email autorisé pour l'instant.</div>}
+          </div>
+        </div>
+        <div className="modal-actions">
+          <button onClick={onClose}>Fermer</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── APP ──────────────────────────────────────────────────────────────────
 export default function App() {
+  const [session, setSession]         = useState(undefined); // undefined = chargement, null = déconnecté
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [confirmNode, ask] = useConfirm();
   const [projects, setProjects]       = useState([]);
   const [currentId, setCurrentId]     = useState(null);
@@ -3593,6 +3729,13 @@ export default function App() {
   const [avatarEdit, setAvatarEdit]   = useState(null);
 
   useEffect(() => {
+    _sb.auth.getSession().then(({ data }) => setSession(data.session));
+    const { data: sub } = _sb.auth.onAuthStateChange((_event, sess) => setSession(sess));
+    return () => sub.subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (!session) return;
     (async () => {
       let list = [];
       if (HAS) { const raw = await sget(LIST_KEY); if (raw) { try { list = JSON.parse(raw); } catch {} } }
@@ -3601,7 +3744,7 @@ export default function App() {
       if (!sel || !list.find((p) => p.id === sel)) sel = list[0].id;
       setProjects(list); setCurrentId(sel); setData(await loadProject(sel));
     })();
-  }, []);
+  }, [session]);
 
   const loadProject = async (id) => {
     if (HAS) { const raw = await sget(projKey(id)); if (raw) { try { const d = JSON.parse(raw); return { ...emptyData(), ...d, ui: { multi: {}, ...(d.ui || {}) } }; } catch {} } }
@@ -3696,6 +3839,9 @@ export default function App() {
     getMultiPieces, addMultiPiece, updateMultiPiece, renameMultiPiece, deleteMultiPiece,
     setCompare, activeMulti: data.ui?.multi || {}, setActiveMulti, onConfirm: ask };
 
+  if (session === undefined) return null;
+  if (!session) return <AuthScreen />;
+
   return (
     <div className="wrap">
       <style>{CSS}</style>
@@ -3762,6 +3908,13 @@ export default function App() {
         <button className="content-btn" onClick={() => setContentOpen(true)}>✦ Générer un contenu</button>
         <button className="export-btn" onClick={() => setExportOpen(true)}>Générer le brief complet</button>
         <div className="rail-foot">Gère tes avatars en haut · clique une étape pour l'ouvrir.</div>
+        <div className="rail-account">
+          <span className="rail-account-email">{session.user.email}</span>
+          {session.user.email === ADMIN_EMAIL && (
+            <button onClick={() => setSettingsOpen(true)}>Paramètres</button>
+          )}
+          <button onClick={() => _sb.auth.signOut()}>Déconnexion</button>
+        </div>
       </aside>
 
       <main className="main">
@@ -3884,6 +4037,7 @@ export default function App() {
         <ContentModal onClose={() => setContentOpen(false)} data={data}
           projectName={current?.name || "Projet"} />
       )}
+      {settingsOpen && <SettingsModal onClose={() => setSettingsOpen(false)} />}
       {confirmNode}
       <CopyModal />
     </div>
@@ -4160,6 +4314,26 @@ const CSS = `
 .modal-actions{display:flex;gap:8px;padding:12px 22px;border-top:1px solid var(--line);}
 .modal-actions button{background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 14px;font-size:13px;cursor:pointer;font-family:inherit;}
 .modal-actions .primary{background:var(--rail);color:#fff;border-color:var(--rail);}
+
+/* AUTH */
+.authWrap{display:flex;align-items:center;justify-content:center;min-height:100vh;width:100%;background:var(--paper,#EEF0EC);font-family:'Inter',system-ui,sans-serif;}
+.authCard{background:#fff;border:1px solid #DCE0DA;border-radius:14px;padding:32px;width:min(380px,90vw);display:flex;flex-direction:column;gap:14px;}
+.authCard input{width:100%;border:1px solid #DCE0DA;border-radius:7px;padding:9px 11px;font-family:inherit;font-size:13.5px;}
+.authCard input:focus{outline:none;border-color:#2E7D6B;}
+.authCard .primary{background:#14211C;color:#fff;border:none;border-radius:8px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:4px;}
+.authError{font-size:12.5px;color:#B0432E;background:#FBEAE6;border-radius:7px;padding:9px 11px;}
+.authInfo{font-size:12.5px;color:#1E8A5C;background:#E4F4EC;border-radius:7px;padding:9px 11px;}
+.authSwitch{background:none;border:none;color:#5B655E;font-size:12.5px;text-decoration:underline;cursor:pointer;font-family:inherit;padding:0;}
+
+/* ACCOUNT (rail) */
+.rail-account{display:flex;flex-direction:column;gap:6px;padding-top:12px;margin-top:8px;border-top:1px solid rgba(255,255,255,.1);}
+.rail-account-email{font-size:11px;color:#9AA39C;word-break:break-all;}
+.rail-account button{background:none;border:1px solid rgba(255,255,255,.18);color:#D7DED9;border-radius:7px;padding:7px 10px;font-size:12px;cursor:pointer;font-family:inherit;text-align:left;}
+.rail-account button:hover{border-color:rgba(255,255,255,.4);}
+
+/* ALLOWLIST */
+.allow-list{display:flex;flex-direction:column;gap:6px;}
+.allow-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#F4F7F4;border-radius:7px;padding:8px 12px;font-size:13px;}
 
 @media (max-width:840px){
   .wrap{flex-direction:column;}
