@@ -2106,9 +2106,22 @@ const STRIKE_CATEGORIES = [
     tip: "Attaque en premier quand le prospect ne te connaît pas encore. La douleur capte l'attention parce qu'elle nomme ce que la personne ressent déjà. Ne l'utilise pas si le prospect est déjà dans ta liste ou a déjà acheté — ça sonne comme si tu ne le connaissais pas.",
     formulas: [
       { id: "d1", text: "Vous en avez assez de {problème} ? Commencez avec {solution} dès maintenant !", vars: ["problème", "solution"], example: "Vous en avez assez de passer tout votre temps à gérer vos publicités ? Déléguez à AdsBack dès maintenant." },
-      { id: "d2", text: "Vous êtes fatigué de {anxiété}, mais vous ne souhaitez pas {solution classique}. Il est temps de rencontrer {solution}.", vars: ["anxiété", "solution classique", "solution"], example: "Vous en avez assez de perdre vos Airpods mais vous ne souhaitez pas des écouteurs filaires ? Découvrez Eartraps." },
+      { id: "d2", text: "Vous êtes fatigué de {anxiété}, mais vous ne souhaitez pas {solution classique}. Il est temps de rencontrer {solution}.", vars: ["anxiété", "solution classique", "solution"], example: "Vous en avez assez de perdre vos Airpods mais vous ne souhaitez pas des écouteurs filaires ? Découvrez Eartraps.",
+        variants: [
+          { text: "Si vous voulez {résultat}, mais que vous {problème}, voici la solution", vars: ["résultat", "problème"], example: "Si vous voulez obtenir plus de clients, mais que vous détestez la prospection à froid, voici la solution." },
+          { text: "Si vous voulez {résultat}, mais que vous avez peur de {peur}", vars: ["résultat", "peur"], example: "Si vous voulez créer du contenu, mais que vous avez peur d'être jugé par les autres." },
+          { text: "{Solution courante} ne vous permettra pas de {résultat}, faites ceci à la place", vars: ["Solution courante", "résultat"], example: "Le cold call ne vous apportera pas plus de clients, faites ceci à la place." },
+        ] },
       { id: "d3", text: "Combien de temps allez-vous supporter {douleur} ?", vars: ["douleur"], example: "Combien de temps allez-vous supporter vos chemises froissées ?" },
-      { id: "d4", text: "Arrêtez de {résultat indésirable}", vars: ["résultat indésirable"], example: "Arrêtez de faire des publicités qui ne fonctionnent pas." },
+      { id: "d4", text: "Arrêtez de {résultat indésirable}", vars: ["résultat indésirable"], example: "Arrêtez de faire des publicités qui ne fonctionnent pas.",
+        variants: [
+          { text: "Ne fais plus jamais {action indésirable}", vars: ["action indésirable"], example: "Ne poste plus jamais de réels Instagram." },
+          { text: "Voilà pourquoi tu dois arrêter de {action indésirable}", vars: ["action indésirable"], example: "Voilà pourquoi tu dois arrêter de prendre du café le matin." },
+          { text: "Arrêtez de faire {action courante} comme ceci !", vars: ["action courante"], example: "Arrêtez de faire des pompes comme ceci !" },
+          { text: "ARRÊTEZ {action indésirable} si vous voulez {résultat}", vars: ["action indésirable", "résultat"], example: "ARRÊTEZ de dire ces choses à votre enfant si vous voulez qu'il prenne confiance en lui." },
+          { text: "Comment arrêter {erreur courante} en {nombre} étapes faciles", vars: ["erreur courante", "nombre"], example: "Comment arrêter de perdre des clients en 3 étapes faciles." },
+          { text: "Vous ne pouvez pas atteindre {résultat} si vous continuez à {action indésirable}", vars: ["résultat", "action indésirable"], example: "Vous ne pouvez pas atteindre la liberté financière si vous continuez à dépenser 40 % de votre revenu pour vous-même." },
+        ] },
       { id: "d5", text: "Arrêtez de gaspiller {temps/argent} pour {résultat indésirable}", vars: ["temps/argent", "résultat indésirable"], example: "Arrêtez de gaspiller votre budget publicitaire pour des leads peu qualifiés." },
       { id: "d6", text: "{Audience} : il est temps d'arrêter le {problème}. Utilisez la {Solution}.", vars: ["Audience", "problème", "Solution"], example: "Entrepreneurs : il est temps d'arrêter la comptabilité. Utilisez notre outil." },
       { id: "d7", text: "Vous {comportement indésirable} ? C'est fini avec {entreprise}", vars: ["comportement indésirable", "entreprise"], example: "Vous continuez de créer des landing pages à partir de 0 ? C'est fini avec lander.io" },
@@ -2136,16 +2149,31 @@ const STRIKE_CATEGORIES = [
     ],
     tip: "Utilise ces formules quand l'intention est déjà là — le prospect sait qu'il a un problème et cherche activement une solution. En cold outreach, commence d'abord par la douleur, puis ramène la promesse.",
     formulas: [
-      { id: "r1", text: "Obtenez {résultat} comme {autorité} - sans {douleur}", vars: ["résultat", "autorité", "douleur"], example: "Obtenez un logo unique comme Nike - sans dépenser 50 000€." },
+      { id: "r1", text: "Obtenez {résultat} comme {autorité} - sans {douleur}", vars: ["résultat", "autorité", "douleur"], example: "Obtenez un logo unique comme Nike - sans dépenser 50 000€.",
+        variants: [
+          { text: "Comment vous pouvez obtenir {résultat} en {période}, tout comme moi", vars: ["résultat", "période"], example: "Comment vous pouvez devenir plus fort en 1 semaine, tout comme moi." },
+        ] },
       { id: "r2", text: "{Résultat ambitieux} en {période} ou {promesse}.", vars: ["Résultat ambitieux", "période", "promesse"], example: "Doublez votre nombre de prospects en 15 jours ou nous vous remboursons l'intégralité." },
       { id: "r3", text: "{Verbe d'action} enfin des {résultats}.", vars: ["Verbe d'action", "résultats"], example: "Écrivez enfin des titres vraiment percutants." },
       { id: "r4", text: "Obtenez {résultat} ou {garantie}.", vars: ["résultat", "garantie"], example: "Obtenez 2x plus de ventes ou nous vous remboursons l'intégralité." },
-      { id: "r5", text: "Maîtrisez l'art du {résultat souhaité} en seulement {période}.", vars: ["résultat souhaité", "période"], example: "Maîtriser l'art du copywriting en seulement 2 semaines." },
-      { id: "r6", text: "Comment {résultat souhaité} sans {contrainte} ?", vars: ["résultat souhaité", "contrainte"], example: "Comment on-boarder parfaitement vos employés - sans perdre une seule minute ?" },
+      { id: "r5", text: "Maîtrisez l'art du {résultat souhaité} en seulement {période}.", vars: ["résultat souhaité", "période"], example: "Maîtriser l'art du copywriting en seulement 2 semaines.",
+        variants: [
+          { text: "Je vais vous apprendre comment {résultat} en {nombre} étapes", vars: ["résultat", "nombre"], example: "Je vais vous apprendre comment gagner 10 000 € en 4 étapes." },
+          { text: "Comment {résultat} en {période}, avec {solution}", vars: ["résultat", "période", "solution"], example: "Comment obtenir vos 3 premiers clients en 2 semaines, avec des annonces payantes." },
+        ] },
+      { id: "r6", text: "Comment {résultat souhaité} sans {contrainte} ?", vars: ["résultat souhaité", "contrainte"], example: "Comment on-boarder parfaitement vos employés - sans perdre une seule minute ?",
+        variants: [
+          { text: "Comment {résultat souhaité} gratuitement ?", vars: ["résultat souhaité"], example: "Comment manger au Burger King gratuitement ?" },
+          { text: "Si tu veux {résultat souhaité} sans {contrainte}", vars: ["résultat souhaité", "contrainte"], example: "Si tu veux développer ton business de coaching sans monter une équipe." },
+          { text: "Imaginez si vous pouviez {résultat souhaité}, sans {contrainte}", vars: ["résultat souhaité", "contrainte"], example: "Imaginez si vous pouviez envoyer 1000 emails personnalisés, sans passer des jours devant votre ordinateur." },
+        ] },
       { id: "r7", text: "Comment {Résultat souhaité} tout en {bénéfice} ?", vars: ["Résultat souhaité", "bénéfice"], example: "Comment générer des leads qualifiés en automatique tout en dormant ?" },
       { id: "r8", text: "Comment transformer votre {produit} en {résultat} ?", vars: ["produit", "résultat"], example: "Comment transformer votre Google Ads en véritable machine à leads ?" },
       { id: "r9", text: "Comment {résultat ambitieux} et {résultat inattendu} ?", vars: ["résultat ambitieux", "résultat inattendu"], example: "Comment obtenir des leads qualifiés et ne plus vous préoccuper de votre prospection." },
-      { id: "r10", text: "Obtenez plus de {résultat} avec {catégorie de produit}.", vars: ["résultat", "catégorie de produit"], example: "Obtenez plus de leads qualifiés avec notre agence Google Ads." },
+      { id: "r10", text: "Obtenez plus de {résultat} avec {catégorie de produit}.", vars: ["résultat", "catégorie de produit"], example: "Obtenez plus de leads qualifiés avec notre agence Google Ads.",
+        variants: [
+          { text: "Voici comment vous allez {résultat} avec juste {outil}", vars: ["résultat", "outil"], example: "Voici comment vous allez obtenir des centaines de ventes sur votre boutique avec juste un outil d'IA." },
+        ] },
       { id: "r11", text: "Économisez {temps/argent} en {solution}.", vars: ["temps/argent", "solution"], example: "Économisez un temps précieux en déléguant vos ads à nos experts." },
       { id: "r12", text: "Contruisez un {produit désiré} dont vous pouvez être fier.", vars: ["produit désiré"], example: "Construisez une newsletter dont vous pouvez être fier." },
     ],
@@ -2170,10 +2198,17 @@ const STRIKE_CATEGORIES = [
       { id: "a2", text: "{Audience} : {résultat indésirable} ?", vars: ["Audience", "résultat indésirable"], example: "Freelances : vous avez du mal à trouver vos clients ?" },
       { id: "a3", text: "{Audience} : il est temps d'arrêter le {problème}. Utilisez la {Solution}.", vars: ["Audience", "problème", "Solution"], example: "Entrepreneurs : il est temps d'arrêter la comptabilité. Utilisez notre outil." },
       { id: "a4", text: "Le meilleur moyen pour les {audience} d'obtenir {résultat}.", vars: ["audience", "résultat"], example: "Le meilleur moyen pour les PME de générer des prospects qualifiés." },
-      { id: "a5", text: "La {solution en quelques mots} pour {audience}.", vars: ["solution en quelques mots", "audience"], example: "La plateforme RH all-in-one pour les PME." },
+      { id: "a5", text: "La {solution en quelques mots} pour {audience}.", vars: ["solution en quelques mots", "audience"], example: "La plateforme RH all-in-one pour les PME.",
+        variants: [
+          { text: "Tous les {audience} devraient connaître {ressource}", vars: ["audience", "ressource"], example: "Tous les étudiants devraient connaître ce site." },
+        ] },
       { id: "a6", text: "{Catégorie} {Superlatif} Pour {Audience}.", vars: ["Catégorie", "Superlatif", "Audience"], example: "L'agence la plus performante pour les start-up." },
       { id: "a7", text: "Vous n'avez pas besoin d'être {autorité} pour {résultat}.", vars: ["autorité", "résultat"], example: "Vous n'avez pas besoin d'être Uber pour avoir de bonnes publicités." },
-      { id: "a8", text: "Vous avez du mal à obtenir un {résultat} ? Découvrez pourquoi {Nombre} {autorité} nous ont rejoint {période}", vars: ["résultat", "Nombre", "autorité", "période"], example: "Vous avez du mal à mener des campagnes Google Ads rentables ? Découvrez pourquoi ces 3 grands groupes nous ont délégué leurs ads." },
+      { id: "a8", text: "Vous avez du mal à obtenir un {résultat} ? Découvrez pourquoi {Nombre} {autorité} nous ont rejoint {période}", vars: ["résultat", "Nombre", "autorité", "période"], example: "Vous avez du mal à mener des campagnes Google Ads rentables ? Découvrez pourquoi ces 3 grands groupes nous ont délégué leurs ads.",
+        variants: [
+          { text: "Si vous avez du mal à {problème}, regardez ceci", vars: ["problème"], example: "Si vous avez du mal à perdre du poids, regardez ceci." },
+          { text: "Si vous avez du mal à {problème}, voici ce que vous devez faire", vars: ["problème"], example: "Si vous avez du mal à surmonter votre phobie, voici ce que vous devez faire." },
+        ] },
     ],
   },
   {
@@ -2196,10 +2231,16 @@ const STRIKE_CATEGORIES = [
       { id: "au1", text: "Le {nombre} de {autorités} ont approuvé {solution}.", vars: ["nombre", "autorités", "solution"], example: "98% des dentistes ont approuvé notre nouvelle brosse à dent électrique." },
       { id: "au2", text: "{Période}, {nombre} {autorité} ont utilisé notre {solution} pour {résultat}.", vars: ["Période", "nombre", "autorité", "solution", "résultat"], example: "Cette année, 40+ start-ups ont travaillé avec AdsBack pour obtenir plus de prospects via Google Ads." },
       { id: "au3", text: "Quand {autorité et autorité} ont eu besoin de {solution}, ils nous ont appelé.", vars: ["autorité et autorité", "solution"], example: "Quand Uber et SpaceX ont eu besoin de copywriter leurs pages, ils nous ont appelé." },
-      { id: "au4", text: "{Statistiques} {Audience} {Résultat indésirable} : Êtes-vous l'une d'entre elle ?", vars: ["Statistiques", "Audience", "Résultat indésirable"], example: "87% des freelances ne trouvent pas assez de clients : êtes-vous l'un d'entre eux ?" },
+      { id: "au4", text: "{Statistiques} {Audience} {Résultat indésirable} : Êtes-vous l'une d'entre elle ?", vars: ["Statistiques", "Audience", "Résultat indésirable"], example: "87% des freelances ne trouvent pas assez de clients : êtes-vous l'un d'entre eux ?",
+        variants: [
+          { text: "{Statistique} des gens n'arrivent pas à {résultat} à cause de cela", vars: ["Statistique", "résultat"], example: "99 % des gens n'arrivent pas à avoir des abdos à cause de cela." },
+        ] },
       { id: "au5", text: "{Solution}, soutenue par {source de confiance}.", vars: ["Solution", "source de confiance"], example: "L'école de formation au business development, soutenue par le gouvernement." },
       { id: "au6", text: "Rejoignez les {nombre} {audience} qui {résultat}.", vars: ["nombre", "audience", "résultat"], example: "Rejoignez les 230 000+ freelances qui utilisent notre solution pour trouver plus de clients." },
-      { id: "au7", text: "Nous avons aidé {audience} à obtenir {résultat}.", vars: ["audience", "résultat"], example: "Nous avons aidé plus de 48 agences immobilières à tripler leurs mandats de vente." },
+      { id: "au7", text: "Nous avons aidé {audience} à obtenir {résultat}.", vars: ["audience", "résultat"], example: "Nous avons aidé plus de 48 agences immobilières à tripler leurs mandats de vente.",
+        variants: [
+          { text: "Cette personne {résultat} en {période}", vars: ["résultat", "période"], example: "Cette personne a perdu 14 kg en 3 mois." },
+        ] },
       { id: "au8", text: "Nous avons fait appel {autorité} pour obtenir {produit / service}.", vars: ["autorité", "produit / service"], example: "Nous avons fait appel aux meilleurs experts du secteur pour concevoir ce programme." },
       { id: "au9", text: "Nous {Faisons cela}, mais la particularité est {différenciation}.", vars: ["Faisons cela", "différenciation"], example: "Nous gérons vos publicités, mais la particularité est que nos experts ont 10+ ans d'expérience." },
     ],
@@ -2220,7 +2261,10 @@ const STRIKE_CATEGORIES = [
     ],
     tip: "Ces formules supposent que ton prospect connaît déjà ta catégorie de produit et a probablement essayé une alternative. Sur un marché nouveau ou une audience froide, commence par éduquer avant de te différencier.",
     formulas: [
-      { id: "di1", text: "La {manière} la plus {adjectif} de {résultat}.", vars: ["manière", "adjectif", "résultat"], example: "Le moyen le plus rentable pour générer des prospects qualifiés rapidement." },
+      { id: "di1", text: "La {manière} la plus {adjectif} de {résultat}.", vars: ["manière", "adjectif", "résultat"], example: "Le moyen le plus rentable pour générer des prospects qualifiés rapidement.",
+        variants: [
+          { text: "Voici le raccourci pour {résultat}", vars: ["résultat"], example: "Voici le raccourci pour prendre 5 kg de muscle." },
+        ] },
       { id: "di2", text: "{Catégorie de produit} rendue {adjectif}.", vars: ["Catégorie de produit", "adjectif"], example: "La comptabilité rendue facile." },
       { id: "di3", text: "{Catégorie de produit} Avec {différenciation}", vars: ["Catégorie de produit", "différenciation"], example: "Des ordinateurs portables à moins de 400€." },
       { id: "di4", text: "La seule {catégorie de produit} qui ne fait pas {objection}", vars: ["catégorie de produit", "objection"], example: "Le seul SaaS RH qui ne facture pas au nombre d'employés." },
@@ -2248,37 +2292,204 @@ const STRIKE_CATEGORIES = [
     tip: "Ces formules convertissent quand le désir est déjà créé. En entrée de funnel, elles tombent dans le vide — le prospect n'a pas encore de raison d'agir. Réserve-les pour la fin de séquence ou le bas de page.",
     formulas: [
       { id: "c1", text: "Êtes-vous prêt à accomplir {résultat} avec {offre spéciale} ?", vars: ["résultat", "offre spéciale"], example: "Êtes-vous prêt à obtenir plus de leads avec notre mois d'essai gratuit ?" },
-      { id: "c2", text: "Vous souhaitez {résultat} ? Utilisez {solution} dès maintenant.", vars: ["résultat", "solution"], example: "Vous souhaitez obtenir plus de prospects qualifiés ? Déléguez vos publicités à AdsBack dès maintenant." },
-      { id: "c3", text: "Vous souhaitez {résultat} ? Alors passez à {solution}", vars: ["résultat", "solution"], example: "Vous souhaitez générer plus de prospects ? Alors passez à notre solution." },
+      { id: "c2", text: "Vous souhaitez {résultat} ? Utilisez {solution} dès maintenant.", vars: ["résultat", "solution"], example: "Vous souhaitez obtenir plus de prospects qualifiés ? Déléguez vos publicités à AdsBack dès maintenant.",
+        variants: [
+          { text: "Vous voulez {résultat} — écoutez bien !", vars: ["résultat"], example: "Vous voulez devenir un maître en ventes — écoutez bien !" },
+        ] },
+      { id: "c3", text: "Vous souhaitez {résultat} ? Alors passez à {solution}", vars: ["résultat", "solution"], example: "Vous souhaitez générer plus de prospects ? Alors passez à notre solution.",
+        variants: [
+          { text: "Tu as {situation} ? Alors fais {action}", vars: ["situation", "action"], example: "Tu as un iPhone ? Alors fais ça." },
+          { text: "Alors vous voulez {résultat} n'est-ce pas ? Alors {action attendue}", vars: ["résultat", "action attendue"], example: "Alors vous voulez prendre de la masse musculaire n'est-ce pas ? Alors regardez cette vidéo." },
+          { text: "Si vous {action de l'audience}, alors vous devez obtenir {outil/ressource}", vars: ["action de l'audience", "outil/ressource"], example: "Si vous montez des vidéos, alors vous devez obtenir ces superpositions gratuites." },
+        ] },
       { id: "c4", text: "{Quoi}. {Comment}. {Pourquoi} !", vars: ["Quoi", "Comment", "Pourquoi"], example: "Essayez Elevate. Connectez-vous à notre plateforme d'apprentissage. Trouvez plus de clients !" },
       { id: "c5", text: "Laissez le {produit} travailler sur votre {problème} pendant seulement {une période} - et vous verrez la différence.", vars: ["produit", "problème", "une période"], example: "Laissez nos experts gérez vos publicités pendant 1 mois - et vous verrez la différence." },
       { id: "c6", text: "{Exemple d'entreprise éprouvée} pour les {produits/services}", vars: ["Exemple d'entreprise éprouvée", "produits/services"], example: "Netflix, pour les mangas." },
       { id: "c7", text: "{Produit/service} conçus pour {résultat}", vars: ["Produit/service", "résultat"], example: "Une formation conçue pour décrocher vos 3 premiers clients en 30 jours." },
     ],
   },
+  {
+    id: "listicle",
+    label: "Listicle / Format chiffré",
+    color: "#0E7490",
+    colorBg: "#ECFAFD",
+    icon: "🔢",
+    funnel: ["Découverte (cold)", "Nurture"],
+    usages: [
+      { label: "Hook vidéo courte (TikTok / Reels / Shorts)", ok: true },
+      { label: "Titre YouTube / carrousel LinkedIn", ok: true },
+      { label: "Objet d'email de contenu", ok: true },
+      { label: "Article de blog / newsletter", ok: true },
+      { label: "Headline de page de vente", ok: false, reason: "Un listicle promet du contenu, pas une transformation — il dilue l'offre" },
+      { label: "CTA de conversion", ok: false, reason: "Le format liste ouvre une boucle de lecture, il ne pousse pas à l'achat" },
+    ],
+    tip: "Le chiffre fait la promesse d'un contenu fini et scannable — c'est ce qui déclenche le clic. Il attire l'attention mais ne vend pas : réserve-le au contenu de découverte et de nurture, jamais à la page qui doit convertir.",
+    formulas: [
+      { id: "l1", text: "{Nombre} {catégorie} qui vont te rendre accro à {sujet}", vars: ["Nombre", "catégorie", "sujet"], example: "7 applications IA qui vont te rendre accro à ton téléphone." },
+      { id: "l2", text: "Voici {nombre} signes qui détruisent ton {atout}", vars: ["nombre", "atout"], example: "Voici 3 signes qui détruisent ton charisme." },
+      { id: "l3", text: "{Nombre} qualités d'un {profil}", vars: ["Nombre", "profil"], example: "3 qualités d'un excellent boxeur." },
+      { id: "l4", text: "{Nombre} choses à faire pour {résultat}", vars: ["Nombre", "résultat"], example: "3 choses à faire à 20 ans pour être millionnaire à 30 ans." },
+      { id: "l5", text: "{Nombre} {éléments} pour {résultat}", vars: ["Nombre", "éléments", "résultat"], example: "3 ingrédients pour perdre du poids." },
+      { id: "l6", text: "Voici les {nombre} étapes pour {résultat}", vars: ["nombre", "résultat"], example: "Voici les 5 étapes pour construire un physique parfait." },
+      { id: "l7", text: "TOP {nombre} conseils pour {résultat}", vars: ["nombre", "résultat"], example: "TOP 10 conseils pour avoir une haleine fraîche." },
+      { id: "l8", text: "Astuces simples pour {résultat}", vars: ["résultat"], example: "Astuces simples pour un ventre plat." },
+      { id: "l9", text: "{Nombre} choses que j'aurais aimé savoir plus tôt dans {domaine}", vars: ["Nombre", "domaine"], example: "5 choses que j'aurais aimé savoir plus tôt quand j'élevais mes enfants." },
+      { id: "l10", text: "{Nombre} raisons pour lesquelles vous avez {problème}", vars: ["Nombre", "problème"], example: "4 raisons pour lesquelles vous avez de l'acné sur le visage." },
+      { id: "l11", text: "{Nombre} choses que vous devez savoir pour {résultat}", vars: ["Nombre", "résultat"], example: "3 choses que vous devez savoir pour apprendre l'anglais niveau A1." },
+    ],
+  },
+  {
+    id: "secret",
+    label: "Secret / Curiosité",
+    color: "#A21CAF",
+    colorBg: "#FCF0FB",
+    icon: "🔑",
+    funnel: ["Découverte (cold)", "Considération"],
+    usages: [
+      { label: "Hook vidéo (3 premières secondes)", ok: true },
+      { label: "Objet d'email", ok: true },
+      { label: "Titre de lead magnet", ok: true },
+      { label: "Première ligne de post", ok: true },
+      { label: "Promesse principale de page de vente", ok: false, reason: "Une promesse fondée sur le secret sans preuve derrière détruit la confiance au moment d'acheter" },
+      { label: "Audience qui te connaît déjà bien", ok: false, reason: "L'effet curiosité s'use vite : répété sur une liste engagée, il fait bon marché" },
+    ],
+    tip: "La curiosité ouvre une boucle que le cerveau veut fermer — c'est le levier d'attention le plus puissant en contenu court. Mais tu dois livrer : si le « secret » se révèle banal, tu brûles ta crédibilité pour un seul clic.",
+    formulas: [
+      { id: "s1", text: "Je vais te dévoiler un secret sur {sujet}", vars: ["sujet"], example: "Je vais te dévoiler un secret sur les restaurants." },
+      { id: "s2", text: "Vous ne devriez jamais {action courante} avant de savoir ceci", vars: ["action courante"], example: "Vous ne devriez jamais soulever des poids avant de savoir ceci." },
+      { id: "s3", text: "Vous devez utiliser ce hack secret pour {résultat}", vars: ["résultat"], example: "Vous devez utiliser ce hack secret pour atteindre des millions de vues sur votre prochaine vidéo." },
+      { id: "s4", text: "Voici {un véhicule} dont personne ne parle", vars: ["un véhicule"], example: "Voici un modèle d'affaires dont personne ne parle." },
+      { id: "s5", text: "Voici la vérité sur {sujet}", vars: ["sujet"], example: "Voici la vérité sur la construction d'une entreprise prospère." },
+      { id: "s6", text: "Outil secret pour {résultat}", vars: ["résultat"], example: "Outil secret pour une peau nette." },
+      { id: "s7", text: "Ne posez jamais cette question dans {contexte}", vars: ["contexte"], example: "Ne posez jamais cette question lors d'une négociation." },
+      { id: "s8", text: "Le secret pour {résultat}", vars: ["résultat"], example: "Le secret pour gagner des abonnés sur Instagram." },
+      { id: "s9", text: "Des {ressources} pour {niche} qui semblent illégales à connaître", vars: ["ressources", "niche"], example: "Des sites web pour les rédacteurs qui semblent illégaux à connaître." },
+      { id: "s10", text: "Ceci est le secret pour {résultat}", vars: ["résultat"], example: "Ceci est le secret pour obtenir de nouveaux clients en pilote automatique." },
+      { id: "s11", text: "Et si je te disais que {constat} à cause de {cause inattendue} ?", vars: ["constat", "cause inattendue"], example: "Et si je te disais que tu n'arrives pas à maigrir à cause de l'inflammation ?" },
+    ],
+  },
+  {
+    id: "vecu",
+    label: "Preuve vécue / Expérience",
+    color: "#B45309",
+    colorBg: "#FEF5EA",
+    icon: "🧪",
+    funnel: ["Découverte (cold)", "Considération", "Nurture"],
+    usages: [
+      { label: "Hook vidéo storytelling", ok: true },
+      { label: "Email de nurture (séquence de vente)", ok: true },
+      { label: "Post LinkedIn / X", ok: true },
+      { label: "Section « Mon histoire » de page de vente", ok: true },
+      { label: "Ouverture de VSL", ok: true },
+      { label: "Pub payante à froid (format court)", ok: false, reason: "L'expérience personnelle demande du temps d'attention — coûteux en pub, sauf format long" },
+    ],
+    tip: "Le vécu contourne le filtre anti-publicité : on écoute une histoire, on se méfie d'un argument. C'est la seule famille qui fonctionne aussi bien en froid qu'en nurture, parce que la preuve n'est pas une statistique mais une expérience. Condition non négociable : ce doit être vrai.",
+    formulas: [
+      { id: "v1", text: "J'ai passé {durée} à apprendre {sujet}", vars: ["durée", "sujet"], example: "J'ai passé une semaine à apprendre le voyage astral." },
+      { id: "v2", text: "J'ai essayé {méthode} pendant {durée}", vars: ["méthode", "durée"], example: "J'ai essayé le dropshipping pendant 24 heures." },
+      { id: "v3", text: "J'ai essayé de {résultat} pendant {durée} et voici les résultats", vars: ["résultat", "durée"], example: "J'ai essayé de gagner de l'argent avec le dropshipping pendant 30 jours et voici les résultats." },
+      { id: "v4", text: "Comment j'ai obtenu {résultat}", vars: ["résultat"], example: "Comment j'ai obtenu un prêt de 300 000 € à 25 ans." },
+      { id: "v5", text: "Comment j'ai fait {réalisation}", vars: ["réalisation"], example: "Comment j'ai visité 10 pays l'année dernière." },
+      { id: "v6", text: "Comment j'ai atteint {résultat} en {période}, en partant de zéro", vars: ["résultat", "période"], example: "Comment j'ai atteint 10 000 abonnés en 2 semaines, en partant de zéro." },
+      { id: "v7", text: "La meilleure stratégie {domaine} que j'ai jamais apprise et utilisée", vars: ["domaine"], example: "La meilleure stratégie de marketing d'affiliation que j'ai jamais apprise et utilisée." },
+      { id: "v8", text: "{Cette solution} a changé ma vie", vars: ["Cette solution"], example: "Ce régime a changé ma vie." },
+      { id: "v9", text: "Il y a {période}, on a pris {décision}", vars: ["période", "décision"], example: "Il y a 3 ans, on a pris le plus gros risque de notre vie." },
+      { id: "v10", text: "Si je devais {résultat} en partant de zéro, voici exactement ce que je ferais", vars: ["résultat"], example: "Si je devais gagner de l'argent en ligne en partant de zéro, voici exactement ce que je ferais." },
+      { id: "v11", text: "Si t'as {âge}, {situation}, tu veux {objectif}, voici ce que j'aurais fait", vars: ["âge", "situation", "objectif"], example: "Si t'as 16 ans, zéro euro, et que tu veux lancer un business, voici ce que j'aurais fait." },
+    ],
+  },
+  {
+    id: "erreur",
+    label: "Erreur / Diagnostic",
+    color: "#9A3412",
+    colorBg: "#FDF1EC",
+    icon: "⚠️",
+    funnel: ["Découverte (cold)", "Considération"],
+    usages: [
+      { label: "Hook vidéo (3 premières secondes)", ok: true },
+      { label: "Objet d'email froid", ok: true },
+      { label: "Titre d'audit ou de diagnostic gratuit", ok: true },
+      { label: "Post communauté niche", ok: true },
+      { label: "Email de nurture avancé", ok: false, reason: "Pointer une erreur après avoir vendu la solution crée de la dissonance" },
+      { label: "Bas de funnel / CTA final", ok: false, reason: "À l'instant d'acheter, la peur de mal faire fait reculer au lieu de pousser" },
+    ],
+    tip: "Nommer l'erreur que la personne est probablement en train de commettre déclenche une auto-vérification immédiate — c'est le hook le plus difficile à ignorer. Réserve-le au haut de funnel : plus bas, il installe le doute au pire moment.",
+    formulas: [
+      { id: "e1", text: "Une des plus grosses erreurs que vous faites pour {objectif}", vars: ["objectif"], example: "Une des plus grosses erreurs que vous faites et qui vous empêche de perdre du poids." },
+      { id: "e2", text: "La plus grande erreur que tous les {audience} font en {activité}", vars: ["audience", "activité"], example: "La plus grande erreur que tous les athlètes font quand ils perdent du poids." },
+      { id: "e3", text: "Découvrez l'erreur n°1 que chaque débutant fait en {activité}", vars: ["activité"], example: "Découvrez l'erreur n°1 que chaque débutant fait en préparant un marathon." },
+      { id: "e4", text: "La pire {approche} qui ruinera votre {actif}", vars: ["approche", "actif"], example: "La pire stratégie d'investissement immobilier qui ruinera votre patrimoine." },
+      { id: "e5", text: "Si ton {élément} ressemble à ça, {conséquence}", vars: ["élément", "conséquence"], example: "Si ton CV ressemble à ça, ne postule même pas." },
+      { id: "e6", text: "Les gens qui {comportement}", vars: ["comportement"], example: "Les gens qui mangent du Nutella au petit-déjeuner." },
+      { id: "e7", text: "Pour {résultat}, il faut que tu {action}", vars: ["résultat", "action"], example: "Pour maigrir, il faut que tu manges des protéines." },
+      { id: "e8", text: "Ceci est un rappel pour prendre {sujet} au sérieux", vars: ["sujet"], example: "Ceci est un rappel pour prendre les cryptomonnaies au sérieux." },
+    ],
+  },
+  {
+    id: "contrarian",
+    label: "Contrarian / Pattern interrupt",
+    color: "#3F3F46",
+    colorBg: "#F4F4F5",
+    icon: "💥",
+    funnel: ["Découverte (cold)"],
+    usages: [
+      { label: "Hook vidéo (rupture de pattern)", ok: true },
+      { label: "Première ligne de post", ok: true },
+      { label: "Prise de position éditoriale / newsletter", ok: true },
+      { label: "Ouverture de VSL", ok: true },
+      { label: "Communication institutionnelle / B2B conservateur", ok: false, reason: "Le conflit assumé exclut autant qu'il fédère — réservé aux marques qui assument un camp" },
+      { label: "Audience non qualifiée / grand public", ok: false, reason: "Sans frustration réelle et partagée contre l'ennemi, la formule sonne gratuite" },
+    ],
+    tip: "Se positionner contre quelqu'un est l'un des leviers les plus puissants du cours — à condition que la frustration contre cet ennemi existe déjà dans le marché. Si tu l'inventes, tu passes pour un opportuniste. Vérifie-le dans tes verbatims terrain (2-3 bis) avant de l'utiliser.",
+    formulas: [
+      { id: "co1", text: "{Le secteur} vous a menti", vars: ["Le secteur"], example: "L'industrie du fitness vous a menti." },
+      { id: "co2", text: "Mais {source d'autorité} te dit comment {résultat}", vars: ["source d'autorité", "résultat"], example: "Mais TikTok te dit comment percer." },
+      { id: "co3", text: "Cela va être controversé, mais {prise de position}", vars: ["prise de position"], example: "Cela va être controversé, mais les formations en ligne à 2 000 € ne servent à rien." },
+      { id: "co4", text: "Ne fais surtout pas {action courante}, fais {alternative}", vars: ["action courante", "alternative"], example: "N'achète surtout pas cette belle maison, achète plutôt celle-là." },
+      { id: "co5", text: "DERNIÈRES NOUVELLES : {annonce}", vars: ["annonce"], example: "DERNIÈRES NOUVELLES : Google vient de changer son algorithme." },
+    ],
+  },
+  {
+    id: "engagement",
+    label: "Engagement / Ressource",
+    color: "#4D7C0F",
+    colorBg: "#F3F9E8",
+    icon: "🙋",
+    funnel: ["Découverte (cold)", "Nurture"],
+    usages: [
+      { label: "Hook vidéo interactif", ok: true },
+      { label: "Story Instagram (sticker quiz / sondage)", ok: true },
+      { label: "Post d'engagement communauté", ok: true },
+      { label: "Lead magnet / ressource offerte", ok: true },
+      { label: "Page de vente", ok: false, reason: "Une question ouverte à ce stade détourne du seul geste attendu : acheter" },
+      { label: "Email de closing", ok: false, reason: "Le jeu dilue l'urgence de décider" },
+    ],
+    tip: "Ces formules achètent de l'attention par la participation : le lecteur agit avant même d'avoir décidé s'il t'écoute. Excellentes pour la portée organique et la relation — inutiles, voire nuisibles, au moment de convertir.",
+    formulas: [
+      { id: "g1", text: "Tu sais {question} ? {réponse}", vars: ["question", "réponse"], example: "Tu sais de quoi t'as besoin ? D'un repas entre potes." },
+      { id: "g2", text: "On va tester ton {compétence}", vars: ["compétence"], example: "On va tester ta répartie." },
+      { id: "g3", text: "Si t'arrives à {défi}, alors {récompense}", vars: ["défi", "récompense"], example: "Si t'arrives à répondre à ces 10 questions, alors tu peux participer à Questions pour un champion." },
+      { id: "g4", text: "Est-ce que tu penses comme {profil} ?", vars: ["profil"], example: "Est-ce que tu penses comme un psychopathe ?" },
+      { id: "g5", text: "Je te donne {ressource}", vars: ["ressource"], example: "Je te donne le circuit abdos complet." },
+      { id: "g6", text: "La boîte à outils du {profil}", vars: ["profil"], example: "La boîte à outils du créateur de contenu." },
+      { id: "g7", text: "Voici votre plan étape par étape pour {résultat}", vars: ["résultat"], example: "Voici votre plan étape par étape pour courir un marathon." },
+    ],
+  },
 ];
 
-// ─── StrikeView — interface pleine page ───────────────────────────────────
-function StrikeView() {
-  const [activeCat, setActiveCat] = React.useState(STRIKE_CATEGORIES[0].id);
-  const [activeFormula, setActiveFormula] = React.useState(null);
+const STRIKE_NB_FORMULES = STRIKE_CATEGORIES.reduce((n, c) => n + c.formulas.length, 0);
+const STRIKE_NB_VARIANTES = STRIKE_CATEGORIES.reduce(
+  (n, c) => n + c.formulas.reduce((m, f) => m + (f.variants ? f.variants.length : 0), 0), 0);
+
+// ─── StrikeInstance — un bloc d'instanciation (formule ou variante) ───────
+function StrikeInstance({ tpl, color, label }) {
   const [vars, setVars] = React.useState({});
   const [result, setResult] = React.useState("");
   const [copied, setCopied] = React.useState(false);
-  const [showGuide, setShowGuide] = React.useState(false);
-
-  const cat = STRIKE_CATEGORIES.find((c) => c.id === activeCat);
-
-  const selectFormula = (f) => {
-    setActiveFormula(f);
-    setVars({});
-    setResult("");
-    setCopied(false);
-  };
 
   const generate = () => {
-    let out = activeFormula.text;
-    activeFormula.vars.forEach((v) => {
+    let out = tpl.text;
+    tpl.vars.forEach((v) => {
       const val = vars[v] || `[${v}]`;
       out = out.replace(`{${v}}`, val);
     });
@@ -2290,13 +2501,66 @@ function StrikeView() {
   };
 
   return (
+    <>
+      <div className="strike-editor-title" style={{ color }}>{label}</div>
+      <div className="strike-template">{tpl.text}</div>
+
+      {tpl.example && (
+        <div className="strike-example">
+          <div className="strike-example-label">Exemple concret</div>
+          <div className="strike-example-text">{tpl.example}</div>
+        </div>
+      )}
+
+      <div className="strike-vars">
+        {tpl.vars.map((v) => (
+          <div key={v} className="strike-var-row">
+            <label className="strike-var-label">{`{${v}}`}</label>
+            <input
+              className="strike-var-input"
+              placeholder={`Remplace {${v}} par...`}
+              value={vars[v] || ""}
+              onChange={(e) => setVars((prev) => ({ ...prev, [v]: e.target.value }))}
+            />
+          </div>
+        ))}
+      </div>
+
+      <button className="strike-gen-btn" style={{ background: color }} onClick={generate}>
+        Générer l'accroche
+      </button>
+
+      {result && (
+        <div className="strike-result">
+          <div className="strike-result-label">Résultat</div>
+          <div className="strike-result-text">{result}</div>
+          <button className="strike-copy-btn" onClick={doCopy}>
+            {copied ? "✓ Copié !" : "Copier"}
+          </button>
+        </div>
+      )}
+    </>
+  );
+}
+
+// ─── StrikeView — interface pleine page ───────────────────────────────────
+function StrikeView() {
+  const [activeCat, setActiveCat] = React.useState(STRIKE_CATEGORIES[0].id);
+  const [activeFormula, setActiveFormula] = React.useState(null);
+  const [showGuide, setShowGuide] = React.useState(false);
+
+  const cat = STRIKE_CATEGORIES.find((c) => c.id === activeCat);
+
+  const selectFormula = (f) => setActiveFormula(f);
+
+  return (
     <div className="view-wrap strike-view">
 
       {/* HEADER */}
       <div className="view-head">
         <div>
           <h2 className="view-title">⚡ Formule Strike</h2>
-          <p className="view-sub">54 formules d'accroche · 6 catégories · guide d'utilisation intégré</p>
+          <p className="view-sub">{STRIKE_NB_FORMULES} formules d'accroche · {STRIKE_NB_VARIANTES} variantes · {STRIKE_CATEGORIES.length} catégories · guide d'utilisation intégré</p>
         </div>
       </div>
 
@@ -2310,7 +2574,7 @@ function StrikeView() {
               key={c.id}
               className={"strike-cat-btn" + (activeCat === c.id ? " active" : "")}
               style={activeCat === c.id ? { background: c.colorBg, borderColor: c.color, color: c.color } : {}}
-              onClick={() => { setActiveCat(c.id); setActiveFormula(null); setResult(""); setShowGuide(false); }}
+              onClick={() => { setActiveCat(c.id); setActiveFormula(null); setShowGuide(false); }}
             >
               <span className="strike-cat-icon">{c.icon}</span>
               <div>
@@ -2361,6 +2625,11 @@ function StrikeView() {
                 onClick={() => selectFormula(f)}
               >
                 {f.text}
+                {f.variants && f.variants.length > 0 && (
+                  <span className="strike-variant-tag" style={{ background: cat.colorBg, color: cat.color, borderColor: cat.color }}>
+                    +{f.variants.length} variante{f.variants.length > 1 ? "s" : ""}
+                  </span>
+                )}
               </button>
             ))}
           </div>
@@ -2372,44 +2641,23 @@ function StrikeView() {
             <div className="strike-empty">← Choisis une formule pour l'instancier avec tes données.</div>
           ) : (
             <>
-              <div className="strike-editor-title" style={{ color: cat.color }}>Instanciation</div>
-              <div className="strike-template">{activeFormula.text}</div>
+              <StrikeInstance
+                key={activeFormula.id}
+                tpl={activeFormula}
+                color={cat.color}
+                label="Instanciation"
+              />
 
-              {/* EXEMPLE */}
-              {activeFormula.example && (
-                <div className="strike-example">
-                  <div className="strike-example-label">Exemple concret</div>
-                  <div className="strike-example-text">{activeFormula.example}</div>
+              {(activeFormula.variants || []).map((vt, i) => (
+                <div className="strike-variant" key={activeFormula.id + "-v" + i} style={{ borderTopColor: cat.color }}>
+                  <StrikeInstance
+                    key={activeFormula.id + "-v" + i}
+                    tpl={vt}
+                    color={cat.color}
+                    label={`Variante ${i + 1}`}
+                  />
                 </div>
-              )}
-
-              <div className="strike-vars">
-                {activeFormula.vars.map((v) => (
-                  <div key={v} className="strike-var-row">
-                    <label className="strike-var-label">{`{${v}}`}</label>
-                    <input
-                      className="strike-var-input"
-                      placeholder={`Remplace {${v}} par...`}
-                      value={vars[v] || ""}
-                      onChange={(e) => setVars((prev) => ({ ...prev, [v]: e.target.value }))}
-                    />
-                  </div>
-                ))}
-              </div>
-
-              <button className="strike-gen-btn" style={{ background: cat.color }} onClick={generate}>
-                Générer l'accroche
-              </button>
-
-              {result && (
-                <div className="strike-result">
-                  <div className="strike-result-label">Résultat</div>
-                  <div className="strike-result-text">{result}</div>
-                  <button className="strike-copy-btn" onClick={doCopy}>
-                    {copied ? "✓ Copié !" : "Copier"}
-                  </button>
-                </div>
-              )}
+              ))}
             </>
           )}
         </div>
@@ -3911,7 +4159,7 @@ export default function App() {
             <span className="tool-card-icon">⚡</span>
             <div className="tool-card-text">
               <div className="tool-card-name">Formule Strike</div>
-              <div className="tool-card-sub">54 accroches · 6 catégories</div>
+              <div className="tool-card-sub">{STRIKE_NB_FORMULES} accroches · {STRIKE_CATEGORIES.length} catégories</div>
             </div>
           </button>
         </nav>
@@ -4178,6 +4426,8 @@ const CSS = `
 .strike-result-text{font-size:15px;font-weight:600;line-height:1.5;color:var(--ink);}
 .strike-copy-btn{align-self:flex-start;background:var(--accent);color:#fff;border:none;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;}
 .strike-copy-btn:hover{opacity:.88;}
+.strike-variant-tag{display:inline-block;margin-left:8px;font-family:'Inter',system-ui,sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:1px solid;border-radius:20px;padding:2px 8px;white-space:nowrap;vertical-align:middle;}
+.strike-variant{display:flex;flex-direction:column;gap:14px;border-top:2px dashed;padding-top:18px;margin-top:4px;}
 @media(max-width:800px){.strike-body{grid-template-columns:1fr;}.strike-cats{flex-direction:row;flex-wrap:wrap;border-right:none;border-bottom:1px solid var(--line);}.strike-modal{max-height:98vh;}}
 .rail-foot{margin-top:auto;font-size:11px;color:#6E827A;line-height:1.5;border-top:1px solid #26362F;padding-top:12px;}
 
