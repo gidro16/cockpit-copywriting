@@ -5,7 +5,10 @@
       "PowerShell(npm -v)",
       "PowerShell(winget --version)",
       "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"User\"\\); \\(Get-Command npm\\).Source)",
-      "Bash(curl -s \"http://localhost:5173/cockpit-copywriting_9.jsx\")"
+      "Bash(curl -s \"http://localhost:5173/cockpit-copywriting_9.jsx\")",
+      "Bash(git push *)",
+      "Bash(gh pr create --title 'Improve .gitignore with better security and IDE protection' --body 'Added protection for sensitive files and IDE configurations: *)",
+      "PowerShell(winget install GitHub.cli --silent --accept-package-agreements --accept-source-agreements)"
     ]
   }
 }
