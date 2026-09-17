@@ -3833,12 +3833,14 @@ function ContentModal({ onClose, data, projectName }) {
 
 // ─── AuthScreen ───────────────────────────────────────────────────────────
 function AuthScreen() {
-  const [mode, setMode]         = useState("login"); // "login" | "signup"
+  const [mode, setMode]         = useState("login"); // "login" | "signup" | "reset"
   const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
   const [error, setError]       = useState("");
   const [info, setInfo]         = useState("");
   const [busy, setBusy]         = useState(false);
+
+  const switchMode = (m) => { setMode(m); setError(""); setInfo(""); };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -3847,10 +3849,16 @@ function AuthScreen() {
       if (mode === "login") {
         const { error: err } = await _sb.auth.signInWithPassword({ email, password });
         if (err) throw err;
-      } else {
+      } else if (mode === "signup") {
         const { error: err } = await _sb.auth.signUp({ email, password });
         if (err) throw err;
         setInfo("Compte créé. Vérifie ta boîte mail pour confirmer, puis connecte-toi.");
+      } else {
+        const { error: err } = await _sb.auth.resetPasswordForEmail(email, {
+          redirectTo: window.location.origin,
+        });
+        if (err) throw err;
+        setInfo("Si un compte existe avec cet email, un lien de réinitialisation vient d'être envoyé. Vérifie ta boîte mail.");
       }
     } catch (err) {
       const msg = (err?.message || "").toLowerCase();
@@ -3866,6 +3874,13 @@ function AuthScreen() {
     }
   };
 
+  const titles = {
+    login: ["Content de te revoir", "Connecte-toi à ton cockpit"],
+    signup: ["Bienvenue", "Crée ton cockpit"],
+    reset: ["Mot de passe oublié", "Réinitialise ton accès"],
+  };
+  const [eyebrow, title] = titles[mode];
+
   return (
     <div className="authWrap">
       <style>{CSS}</style>
@@ -3879,27 +3894,107 @@ function AuthScreen() {
       </div>
 
       <form className="authCard" onSubmit={submit}>
-        <div className="authCard-eyebrow">{mode === "login" ? "Content de te revoir" : "Bienvenue"}</div>
-        <h1 className="authCard-h">{mode === "login" ? "Connecte-toi à ton cockpit" : "Crée ton cockpit"}</h1>
+        <div className="authCard-eyebrow">{eyebrow}</div>
+        <h1 className="authCard-h">{title}</h1>
 
         <label className="field">
           <span className="field-lbl">Email</span>
           <input type="email" required autoFocus value={email} onChange={(e) => setEmail(e.target.value)} placeholder="toi@exemple.com" />
         </label>
-        <label className="field">
-          <span className="field-lbl">Mot de passe</span>
-          <input type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="6 caractères minimum" />
-        </label>
+
+        {mode !== "reset" && (
+          <label className="field">
+            <span className="field-lbl">Mot de passe</span>
+            <input type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="6 caractères minimum" />
+          </label>
+        )}
+
+        {mode === "login" && (
+          <button type="button" className="authSwitch" onClick={() => switchMode("reset")} style={{ alignSelf: "flex-end", marginTop: -6 }}>
+            Mot de passe oublié ?
+          </button>
+        )}
 
         {error && <div className="authError">{error}</div>}
         {info && <div className="authInfo">{info}</div>}
 
         <button className="authSubmit" type="submit" disabled={busy}>
-          {busy ? "…" : mode === "login" ? "Se connecter →" : "Créer mon compte →"}
+          {busy ? "…" : mode === "login" ? "Se connecter →" : mode === "signup" ? "Créer mon compte →" : "Envoyer le lien →"}
         </button>
-        <button type="button" className="authSwitch" onClick={() => { setMode(mode === "login" ? "signup" : "login"); setError(""); setInfo(""); }}>
-          {mode === "login" ? "Pas encore de compte ? Crée-le" : "Déjà un compte ? Connecte-toi"}
-        </button>
+
+        {mode === "reset" ? (
+          <button type="button" className="authSwitch" onClick={() => switchMode("login")}>
+            ← Retour à la connexion
+          </button>
+        ) : (
+          <button type="button" className="authSwitch" onClick={() => switchMode(mode === "login" ? "signup" : "login")}>
+            {mode === "login" ? "Pas encore de compte ? Crée-le" : "Déjà un compte ? Connecte-toi"}
+          </button>
+        )}
+      </form>
+    </div>
+  );
+}
+
+// ─── ResetPasswordScreen — définir un nouveau mot de passe ────────────────
+function ResetPasswordScreen() {
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm]   = useState("");
+  const [error, setError]       = useState("");
+  const [done, setDone]         = useState(false);
+  const [busy, setBusy]         = useState(false);
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setError("");
+    if (password.length < 6) { setError("6 caractères minimum."); return; }
+    if (password !== confirm) { setError("Les deux mots de passe ne correspondent pas."); return; }
+    setBusy(true);
+    const { error: err } = await _sb.auth.updateUser({ password });
+    setBusy(false);
+    if (err) { setError(err.message || "Une erreur est survenue."); return; }
+    setDone(true);
+  };
+
+  return (
+    <div className="authWrap">
+      <style>{CSS}</style>
+      <div className="authPanel">
+        <div className="authPanel-mark">◧</div>
+        <div className="authPanel-t">Cockpit Copywriting</div>
+        <div className="authPanel-s">Pipeline de lancement</div>
+        <p className="authPanel-quote">
+          Les 29 chapitres de la formation, réordonnés dans la logique d'un vrai lancement — de la recherche terrain au brief final.
+        </p>
+      </div>
+
+      <form className="authCard" onSubmit={submit}>
+        <div className="authCard-eyebrow">Dernière étape</div>
+        <h1 className="authCard-h">Choisis ton nouveau mot de passe</h1>
+
+        {done ? (
+          <>
+            <div className="authInfo">Mot de passe mis à jour. Recharge la page pour accéder à ton cockpit.</div>
+            <button type="button" className="authSubmit" onClick={() => window.location.assign(window.location.origin)}>
+              Continuer →
+            </button>
+          </>
+        ) : (
+          <>
+            <label className="field">
+              <span className="field-lbl">Nouveau mot de passe</span>
+              <input type="password" required minLength={6} autoFocus value={password} onChange={(e) => setPassword(e.target.value)} placeholder="6 caractères minimum" />
+            </label>
+            <label className="field">
+              <span className="field-lbl">Confirme le mot de passe</span>
+              <input type="password" required minLength={6} value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="Retape le même" />
+            </label>
+            {error && <div className="authError">{error}</div>}
+            <button className="authSubmit" type="submit" disabled={busy}>
+              {busy ? "…" : "Enregistrer →"}
+            </button>
+          </>
+        )}
       </form>
     </div>
   );
@@ -3973,6 +4068,7 @@ function SettingsModal({ onClose }) {
 // ─── APP ──────────────────────────────────────────────────────────────────
 export default function App() {
   const [session, setSession]         = useState(undefined); // undefined = chargement, null = déconnecté
+  const [passwordRecovery, setPasswordRecovery] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [confirmNode, ask] = useConfirm();
   const [projects, setProjects]       = useState([]);
@@ -3989,7 +4085,10 @@ export default function App() {
 
   useEffect(() => {
     _sb.auth.getSession().then(({ data }) => setSession(data.session));
-    const { data: sub } = _sb.auth.onAuthStateChange((_event, sess) => setSession(sess));
+    const { data: sub } = _sb.auth.onAuthStateChange((event, sess) => {
+      if (event === "PASSWORD_RECOVERY") setPasswordRecovery(true);
+      setSession(sess);
+    });
     return () => sub.subscription.unsubscribe();
   }, []);
 
@@ -4098,6 +4197,7 @@ export default function App() {
     getMultiPieces, addMultiPiece, updateMultiPiece, renameMultiPiece, deleteMultiPiece,
     setCompare, activeMulti: data.ui?.multi || {}, setActiveMulti, onConfirm: ask };
 
+  if (passwordRecovery) return <ResetPasswordScreen />;
   if (session === undefined) return null;
   if (!session) return <AuthScreen />;
 
